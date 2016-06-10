@@ -61,6 +61,11 @@ Xf = NEW_UGLOBAL(M+1:N);
 Be = NEW_FGLOBAL(1:M);
 Bf = NEW_FGLOBAL(M+1:N);
 
+% % % Attempted to solve using Gauss Seidel but could not get logic working
+% % % in time so inv() is still being used
+% TEMP = Bf - Kfe * Xe;
+% x0 = ones(size(Xf,1 ), 1);
+% Xf = solveGaussSeidel(Kf, TEMP, x0);
 Xf = inv(Kf) * (Bf - Kfe * Xe);
 Be = Ke * Xe + Kef * Xf;
 
