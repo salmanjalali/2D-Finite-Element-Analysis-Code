@@ -1,14 +1,13 @@
 %*************************************************************************
-% MTE 204: Numerical Methods - Project 1B
-% Group Number:     12
-
-% Group Members:    Salman Jalali, Nathaniel Schmitz, Tai Sun, Aditya Boppe
-%                   Srushti Rana
+% MTE 204: Numerical Methods
+% 
 %*************************************************************************
 
 clc;
 close all;
 clear all;
+
+% generate_input_files();
 
 % % % **********************************************
 % % % THE CORE FINITE ELEMENT STEPS
@@ -21,14 +20,9 @@ clear all;
 % % % 6)	Solve our equations of motion to determine displacement, deformation, voltage, current, temperature, etc.
 % % % 7)	Post processing
 
-% % %  This chunk of code was used initially to create the appropriate
-% % %  files for all the questions, this was a one time thing.
-% generate_input_files();
-
 % % % **********************************************
 % % % Step One: Input Information, determine DOF, and initialize
 % % % **********************************************
-
 % % % UNCOMMENT FOR QUESTION1
 % [NODES,SCTR,PROPS,NODAL_BCS,NODAL_FORCES] = open_files(...
 %                'nodes1.txt',...
@@ -58,19 +52,16 @@ clear all;
 % % % *******************************************************
 % % % Step Three: PROCESS MATERIAL INFORMATION
 % % % *******************************************************
-
 [AREA,YOUNG,DENSITY,DAMPING] = process_material_props(PROPS);
 
 % % % ******************************************************
 % % % Step Four: Matrix Assembly
 % % % ******************************************************
-
 [KGLOBAL] = buildKGLOBAL(NODES,SCTR,DOF,YOUNG,AREA,KGLOBAL);
 
 % % % ******************************************************
 % % % Step Five: Boundary Conditions
 % % % ******************************************************
-
 [UGLOBAL,FIXED] = buildNODEBCs(UGLOBAL,NODAL_BCS,DOF);
 [FGLOBAL,FREE] = buildFORCEBCs(FGLOBAL,NODAL_FORCES,FIXED,DOF,size(KGLOBAL,1));
 [MGLOBAL] = buildMGLOBAL(NODES,SCTR,DOF,AREA,DENSITY,MGLOBAL,FIXED);
@@ -107,8 +98,7 @@ DVAR = 'input3/variable_disp_10.txt';
 % % % % **********************************************************
 % % % % Step 7: Post Processing
 % % % % **********************************************************
-
-% % % % OPTIONAL: Used to view the model
+% % % % Used to view the model
 % LAST = size(UGLOBAL_MATRIX, 1);
 % COLS = size(UGLOBAL_MATRIX, 2);
 % postprocesser(NODES(:, 1), NODES(:, 2), SCTR, transpose(UGLOBAL_MATRIX(LAST, 2:COLS)));
