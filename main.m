@@ -30,20 +30,20 @@ clear all;
 % % % **********************************************
 
 % % % UNCOMMENT FOR QUESTION1
-% [NODES,SCTR,PROPS,NODAL_BCS,NODAL_FORCES] = open_files(...
-%                'nodes1.txt',...
-%                'sctr1.txt',...
-%                'props1.txt',...
-%                'nodeBCs1.txt',...
-%                'nodeFORCES1.txt');
+[NODES,SCTR,PROPS,NODAL_BCS,NODAL_FORCES] = open_files(...
+               'nodes1.txt',...
+               'sctr1.txt',...
+               'props1.txt',...
+               'nodeBCs1.txt',...
+               'nodeFORCES1.txt');
 
 % % % UNCOMMENT FOR QUESTION2
-[NODES,SCTR,PROPS,NODAL_BCS,NODAL_FORCES] = open_files(...
-    'nodes2.txt',...
-    'sctr2.txt',...
-    'props2.txt',...
-    'nodeBCs2.txt',...
-    'nodeFORCES2.txt');
+% [NODES,SCTR,PROPS,NODAL_BCS,NODAL_FORCES] = open_files(...
+%     'nodes2.txt',...
+%     'sctr2.txt',...
+%     'props2.txt',...
+%     'nodeBCs2.txt',...
+%     'nodeFORCES2.txt');
 
 % [NODES,SCTR,PROPS,NODAL_BCS,NODAL_FORCES] = open_files(...
 %     'nodes3.txt',...
@@ -55,13 +55,13 @@ clear all;
 % % % These values can be updated accordingly to work with different
 % % % questions
 OPTION = [
-    0.00001; % Time Steps
-    5; % End Time
+    1; % Time Steps
+    5; % End Time: Set to 0.5 for question 3
     1; % Mode: 1 For Explicit Dynamcis and 2 For Implicit Dynamics
     3/2; % Gamma
     8/5; % Beta
-    1; % Solve using Gauss-Seidel
-    1; % Distribute Mass: 1 for questions 2 and 3, 0 for question 1
+    0; % Solve using Gauss-Seidel
+    0; % Distribute Mass: 1 for questions 2 and 3, 0 for question 1
 ];
 
 % % % If doing question 2, update the variable to the following:
@@ -69,7 +69,7 @@ OPTION = [
 % % % 'input2/variable_forces_3.txt' IF the time step is set to 0.001
 % % % 'input2/variable_forces_5.txt' IF the time step is set to 0.00001
 % % % Set to '' if doing questions 1 and 3
-FVAR = 'input2/variable_forces_5.txt';
+FVAR = '';
 
 % % % If doing question 3, update the variable to the following
 % % % 'input3/variable_disp_01.txt' IF the time step is set to 0.1
@@ -111,9 +111,18 @@ DVAR = '';
 % % % % **********************************************************
 % % % % Step 7: Post Processing
 % % % % **********************************************************
-plot(UGLOBAL_MATRIX(:,1),UGLOBAL_MATRIX(:,4));
-% % % % OPTIONAL: Used to view the model
+
+% % % OPTIONAL: Used to view the model
 % LAST = size(UGLOBAL_MATRIX, 1);
 % COLS = size(UGLOBAL_MATRIX, 2);
-% postprocesser(NODES(:, 1), NODES(:, 2), SCTR, transpose(UGLOBAL_MATRIX(LAST, 2:COLS)));
-
+% 
+% for i = 1:5:size(UGLOBAL_MATRIX,1)
+%     postprocesser(1000*NODES(:,1),1000*NODES(:,2),SCTR',1000*transpose(UGLOBAL_MATRIX(i, 2:COLS)))   
+%     plottitle = sprintf('Deformation of Structure at Time %f ms' ,UGLOBAL_MATRIX(i,1));
+%     title(plottitle)
+%     plottitle = sprintf('Deformation of Structure at inc %d',i);
+%     saveas(2,plottitle,'png');
+%     display(UGLOBAL_MATRIX(i,1));
+%     clf(2);   
+% end
+% clc;
