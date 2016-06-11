@@ -33,20 +33,13 @@ for el = 1:N
 
     MASS_START = zeros(DOF, DOF);
     if ismember(START, FIXED) == 1
-        if DISTRIBUTE_MASS ==  1
-            MASS_START = (MASS(el)/2) * eye(DOF);
-        else
-            MASS_START = (MASS(el)) * eye(DOF);
-        end
+        
+        MASS_START = (MASS(el)) * eye(DOF);
     end
 
     MASS_END = zeros(DOF, DOF);
     if ismember(END, FIXED) == 1
-        if DISTRIBUTE_MASS ==  1
-            MASS_END = (MASS(el)/2) * eye(DOF);
-        else
-            MASS_END = (MASS(el)) * eye(DOF);
-        end
+        MASS_END = (MASS(el)) * eye(DOF);
     end
     
     START_GLOBAL = (START - 1) * 2 + 1; % Start diagonal global.

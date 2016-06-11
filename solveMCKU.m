@@ -12,6 +12,7 @@ CURRENT_ACC = zeros(N, 1);
 dT = OPTION(1, 1);
 EdT = OPTION(2, 1);
 MODE = OPTION(3, 1);
+SOLVE_GAUSS_SEIDEL = OPTION(5, 1);
 dT2 = dT^2;
 
 GAMMA = OPTION(4, 1);
@@ -46,7 +47,7 @@ if MODE == 1
         end
         
         KNOWN = -1 * (B * CURRENT_DISP + D * PREV_DISP);
-        [NEXT_DISP, NEXT_FGLOBAL] = solveMixed(A, CURRENT_DISP, CURRENT_FGLOBAL, KNOWN, FIXED, FREE);
+        [NEXT_DISP, NEXT_FGLOBAL] = solveMixed(A, CURRENT_DISP, CURRENT_FGLOBAL, KNOWN, FIXED, FREE, SOLVE_GAUSS_SEIDEL);
         
         CURRENT_VEL = (1/(2*dT)) * (NEXT_DISP - PREV_DISP);
         CURRENT_ACC = (1/dT2) * (NEXT_DISP - 2 * CURRENT_DISP + PREV_DISP);
@@ -86,7 +87,7 @@ else
         % think the FREE and FIXED are generated correctly for this
         % question.
         KNOWN = Btilda * CURRENT_DISP + Ctilda * CURRENT_VEL + Dtilda * CURRENT_ACC;
-        [NEXT_DISP, NEXT_FGLOBAL] = solveMixed(Atilda, CURRENT_DISP, CURRENT_FGLOBAL, KNOWN, FIXED, FREE);
+        [NEXT_DISP, NEXT_FGLOBAL] = solveMixed(Atilda, CURRENT_DISP, CURRENT_FGLOBAL, KNOWN, FIXED, FREE, SOLVE_GAUSS_SEIDEL);
         
         NEXT_ACC = (2/(BETA * dT))* (1/dT)*(NEXT_DISP - CURRENT_DISP) - (2/(BETA*dT)) * CURRENT_VEL - ((1 - BETA)/BETA) * CURRENT_ACC;
         NEXT_VEL = dT * ((1-GAMMA) * CURRENT_ACC + GAMMA * NEXT_ACC) + CURRENT_VEL;

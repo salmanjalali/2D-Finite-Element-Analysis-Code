@@ -67,10 +67,8 @@ if SOLVE_GAUSS_SEIDEL == 1
     TEMP = Bf - Kfe * Xe;
     x0 = zeros(size(Xf,1 ), 1);
     Xf = solveGaussSeidel(Kf, TEMP, x0);
-else
-    Xf = inv(Kf) * (Bf - Kfe * Xe);
-end
-
+   
+% Xf = inv(Kf) * (Bf - Kfe * Xe);
 Be = Ke * Xe + Kef * Xf;
 
 UGLOBAL = [Xe;Xf];

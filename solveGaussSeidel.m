@@ -5,7 +5,7 @@ function [xk] = solveGaussSeidel(A, b, x0)
     error = inf;        % Exit when error < threshold.
     iter = 0;           % Iteration number.
     
-    while error >= 0.00001
+    while error >= 0.000000000000000001
         for ii = 1:n
             summation = b(ii, 1);
             for jj = 1:ii-1
